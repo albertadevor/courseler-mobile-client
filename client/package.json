@@ -24,6 +24,7 @@
     "react-native": "^0.47.0",
     "react-native-button-component": "^0.1.21",
     "react-native-elements": "^0.16.0",
+    "react-native-floating-label": "^0.2.3",
     "react-native-loading-view": "^1.0.0"
   }
 }

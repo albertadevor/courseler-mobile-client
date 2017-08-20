@@ -35,5 +35,10 @@ module.exports = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: '#F5FCFF',
-	}
+	},
+	h1: {
+		fontSize: 40,
+		fontFamily: 'space-mono',
+		color: '#333',
+	},
 });

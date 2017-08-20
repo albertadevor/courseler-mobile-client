@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import styles from './SharedStyles.js';
+import LetsLogInPage from './LetsLogInPage.js';
 import { Asset, Font } from 'expo';
 import LoadingView from 'react-native-loading-view';
 import { Button } from 'react-native-elements';
@@ -11,11 +12,14 @@ export default class LoggedOutView extends React.Component {
 		super();
 		this.state = {
 			assetsAreLoading: true,
+			showLoginPage: false,
 		}
+
 	}
 
 	login() {
-		//todo something
+		//Aparently you have to explicitly say setState to re-render
+		this.setState({showLoginPage: true});
 	}
 
 	componentWillMount() {
@@ -45,13 +49,17 @@ export default class LoggedOutView extends React.Component {
 
 	render() {
 
+		if(this.state.showLoginPage) {
+			return (<LetsLogInPage />);
+		}
+
 		return (
 			<View style = {classStyles.mainContent}>
 				<LoadingView loading={this.state.assetsAreLoading}>
 					<View style = {styles.vertical}>
 						<View style={styles.verticalSubContent}>
 							<Text style ={classStyles.h2}>Brown University</Text>
-							<Text style ={classStyles.h1}>Courseler</Text>
+							<Text style ={styles.h1}>Courseler</Text>
 						</View>
 						<View style={styles.alignRight}>
 							<Image
@@ -64,6 +72,7 @@ export default class LoggedOutView extends React.Component {
 							raised
 							buttonStyle={{backgroundColor: 'rgba(89,92,188,1)', borderRadius: 10}}
 							textStyle={{textAlign: 'center'}}
+							onPress={() => this.login()}
 							title={`Log In`}/>
 							<Button
 							raised
@@ -86,11 +95,6 @@ const classStyles = StyleSheet.create({
 		alignSelf: 'flex-end',
 		flex: 0,
 		marginRight: -10,
-	},
-	h1: {
-		fontSize: 40,
-		fontFamily: 'space-mono',
-		color: '#333',
 	},
 	h2: {
 		fontSize: 20,
