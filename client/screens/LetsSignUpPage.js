@@ -2,25 +2,25 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import styles from './SharedStyles.js';
 import { Button } from 'react-native-elements';
-import LetsSignUpPage from './LetsSignUpPage.js';
 import t from 'tcomb-form-native'
 import FloatingLabel from 'react-native-floating-label'
+import LetsLogInPage from './LetsLogInPage.js';
 import api from '../api/API.js'
 var dismissKeyboard = require('dismissKeyboard');
 
 const Form = t.form.Form
-const Login = t.struct({
+const SignUp = t.struct({
   email: t.String,
   password: t.String,
 })
 
-export default class LetsLogInPage extends React.Component {
+export default class LetsSignUpPage extends React.Component {
 
 	constructor() {
 		super();
 		this.state = {
 			error: "",
-			redirectToSignup: false,
+			redirectToLogin: false,
 			value: {},
 			options: {
 		        fields: {
@@ -35,64 +35,26 @@ export default class LetsLogInPage extends React.Component {
 		}
 	}
 
-	handleLoginResult(result) {
-		console.log(result)
-		if (result.status === 'success') {
-	        this.props.onLogIn();
-	    } else if (result.status === 'unregistered') {
-	        this.setState({error: "There's no account with that email address!"});
-	    } else if (result.status === 'already_registered') {
-	        this.setState({error: "There's already an account with that email address!"});
-	    } else if (result.status === 'wrong_password') {
-	        this.setState({error: "Incorrect password."});
-	    } else {
-	        this.setState({error: "Unknown error :("});
-	    }
-	};
-
-	redirectToSignup() {
-		this.setState({redirectToSignup: true});
+	redirectToLogin() {
+		this.setState({redirectToLogin: true});
 	}
 
-	sendLoginRequest() {
-		var formVal = this.refs.form.getValue();
-	    if(formVal && formVal.email && formVal.password) {
-	    	api.logIn(formVal.email, formVal.password, (results) => {
-      		this.handleLoginResult(results)
-    		});
-	    }
+	sendSignupRequest() {
+		//TODO
 	}
-
-
-
-	update() {
-
-	}
-
-	// componentDidMount() {
-	// 	scrollView = this.refs.loginScroll;
-	// 	loginForm = this.refs.form;
-	// }
-
-		// <KeyboardAwareScrollView
-		// 		contentContainerStyle = {classStyles.vertical}
-		// 		getTextInputRefs={() => { return [this._emptyRef];}}
-		// 		scrollEnabled={false}>
-
-		   // <View ref={(r) => { this._textInputRef = r; }} />
 
 	render() {
 		let error = <Text style = {classStyles.errorText}>{this.state.error}</Text>
-		if(this.state.redirectToSignup) {
-			return <LetsSignUpPage />
+		if(this.state.redirectToLogin) {
+			return <LetsLogInPage />
 		}
 		return(
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 				<View style = {classStyles.vertical}>
-					<Text style = {styles.h1}> Log In 🥂</Text>
+					<Text style = {styles.h1}> Sign Up 💫</Text>
 					{error}
 					<View style = {classStyles.container}>
-						<Form type={Login}
+						<Form type={SignUp}
 							ref='form'
 				          	value={this.state.value}
 				          	options={this.state.options} />
@@ -102,14 +64,14 @@ export default class LetsLogInPage extends React.Component {
 								buttonStyle={{backgroundColor: 'rgba(89,92,188,1)', 
 								borderRadius: 10, width: 150}}
 								textStyle={{textAlign: 'center'}}
-								onPress={() => this.sendLoginRequest()}
-								title={`Log In`}/>
+								onPress={() => this.sendSignupRequest()}
+								title={`Sign Up`}/>
 
 								<Button buttonStyle={{backgroundColor: 'white', 
 								width: 300}}
 								textStyle={{textAlign: 'center', color: '#111'}}
-								onPress={() => this.redirectToSignup()}
-								title={`Or click here to sign up instead`}/> 
+								onPress={() => this.redirectToLogin()}
+								title={`Or click here to sign in instead`}/> 
 							</View>
 							
 				    </View>

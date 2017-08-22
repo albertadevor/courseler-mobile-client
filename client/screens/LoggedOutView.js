@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import styles from './SharedStyles.js';
 import LetsLogInPage from './LetsLogInPage.js';
 import { Asset, Font } from 'expo';
+import LetsSignUpPage from './LetsSignUpPage.js';
 import LoadingView from 'react-native-loading-view';
 import { Button } from 'react-native-elements';
 
@@ -13,6 +14,7 @@ export default class LoggedOutView extends React.Component {
 		this.state = {
 			assetsAreLoading: true,
 			showLoginPage: false,
+			showSignUpPage: false,
 		}
 
 	}
@@ -20,6 +22,11 @@ export default class LoggedOutView extends React.Component {
 	login() {
 		//Aparently you have to explicitly say setState to re-render
 		this.setState({showLoginPage: true});
+	}
+
+	signup() {
+		//Aparently you have to explicitly say setState to re-render
+		this.setState({showSignUpPage: true});
 	}
 
 	componentWillMount() {
@@ -53,6 +60,10 @@ export default class LoggedOutView extends React.Component {
 			return (<LetsLogInPage />);
 		}
 
+		if(this.state.showSignUpPage) {
+			return (<LetsSignUpPage />);
+		}
+
 		return (
 			<View style = {classStyles.mainContent}>
 				<LoadingView loading={this.state.assetsAreLoading}>
@@ -78,6 +89,7 @@ export default class LoggedOutView extends React.Component {
 							raised
 							buttonStyle={{backgroundColor: 'rgba(89,92,188,1)', borderRadius: 10}}
 							textStyle={{textAlign: 'center'}}
+							onPress={() => this.signup()}
 							title={`Sign Up`}/>
 						</View>
 					</View>
