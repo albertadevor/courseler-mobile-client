@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import styles from './SharedStyles.js';
-import LoadingView from 'react-native-loading-view';
 import { Button } from 'react-native-elements';
 import t from 'tcomb-form-native'
 import FloatingLabel from 'react-native-floating-label'
@@ -22,8 +21,6 @@ export default class LetsLogInPage extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			assetsAreLoading: true,
-			loginScroll: null,
 			email: "",
 			password: "",
 			error: "",
@@ -88,8 +85,8 @@ export default class LetsLogInPage extends React.Component {
 		   // <View ref={(r) => { this._textInputRef = r; }} />
 
 	render() {
+		let error = <Text style = {classStyles.errorText}>{this.state.error}</Text>
 
-		let error = <Text>{this.state.error}</Text>
 		return(
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 				<View style = {classStyles.vertical}>
@@ -133,11 +130,10 @@ const classStyles = StyleSheet.create({
 	container: {
 	    justifyContent: 'center',
 	    alignContent: 'center',
-	    marginTop: 50,
+	    marginTop: 0,
 	    padding: 20,
 	    width: 300,
 	    marginBottom: 130,
-	    marginTop: -30,
 	},
 	vertical: {
 		flex: 1,
@@ -149,5 +145,8 @@ const classStyles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
+	},
+	errorText: {
+		color: 'red',
 	}
 });
