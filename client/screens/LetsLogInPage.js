@@ -36,13 +36,10 @@ export default class LetsLogInPage extends React.Component {
 	}
 
 	handleLoginResult(result) {
-		console.log(result)
 		if (result.status === 'success') {
-	        this.props.onLogIn();
+	        //TODO somrhing happens
 	    } else if (result.status === 'unregistered') {
 	        this.setState({error: "There's no account with that email address!"});
-	    } else if (result.status === 'already_registered') {
-	        this.setState({error: "There's already an account with that email address!"});
 	    } else if (result.status === 'wrong_password') {
 	        this.setState({error: "Incorrect password."});
 	    } else {

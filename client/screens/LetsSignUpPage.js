@@ -35,12 +35,28 @@ export default class LetsSignUpPage extends React.Component {
 		}
 	}
 
+	handleSignUpResult(result) {
+		if (result.status === 'success') {
+	        this.onLogIn();
+	        //TODO on signup what the heck happens!
+	    } else if (result.status === 'already_registered') {
+	        this.setState({error: "There's already an account with that email address!"});
+	    } else {
+	        this.setState({error: "Unknown error :("});
+	    }
+	}
+
 	redirectToLogin() {
 		this.setState({redirectToLogin: true});
 	}
 
 	sendSignupRequest() {
-		//TODO
+		var formVal = this.refs.form.getValue();
+	    if(formVal && formVal.email && formVal.password) {
+	    	api.signUp(formVal.email, formVal.password, (results) => {
+      			this.handleSignUpResult(results)
+    		});
+	    }
 	}
 
 	render() {
@@ -73,7 +89,6 @@ export default class LetsSignUpPage extends React.Component {
 								onPress={() => this.redirectToLogin()}
 								title={`Or click here to sign in instead`}/> 
 							</View>
-							
 				    </View>
 				</View>
 			</TouchableWithoutFeedback>
