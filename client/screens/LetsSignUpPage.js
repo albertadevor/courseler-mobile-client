@@ -50,6 +50,21 @@ export default class LetsSignUpPage extends React.Component {
 		this.setState({redirectToLogin: true});
 	}
 
+	/* Handles IP Validation and on sucess sends signup request*/
+	handleIpValidation(ipObj) {
+		console.log(ipObj)
+	    let firstSeven = ipObj.ip.substring(0, 7);
+	    if(firstSeven == "128.148." ||
+            firstSeven == "138.16." ||
+	        ipObj.ip == "0:0:0:0:0:0:0:1" ||
+	        ipObj.ip == "127.0.0.1") {
+	 	       	var formVal = this.refs.form.getValue();
+			    sendSignupRequest();
+	        } else {
+	       		this.setState({error: "Please to connect to Brown Wifi so we can validate that you are part of the Brown community!"});
+	        }
+    };
+
 	sendSignupRequest() {
 		var formVal = this.refs.form.getValue();
 	    if(formVal && formVal.email && formVal.password) {
@@ -80,7 +95,9 @@ export default class LetsSignUpPage extends React.Component {
 								buttonStyle={{backgroundColor: 'rgba(89,92,188,1)', 
 								borderRadius: 10, width: 150}}
 								textStyle={{textAlign: 'center'}}
-								onPress={() => this.sendSignupRequest()}
+								onPress={() => api.getIpForValidation( (ipObj) => {
+									this.handleIpValidation(ipObj);
+								})}
 								title={`Sign Up`}/>
 
 								<Button buttonStyle={{backgroundColor: 'white', 
