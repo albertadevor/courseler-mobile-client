@@ -37,7 +37,7 @@ export default class LetsLogInPage extends React.Component {
 
 	handleLoginResult(result) {
 		if (result.status === 'success') {
-	        //TODO somrhing happens
+	        console.log('were in!')
 	    } else if (result.status === 'unregistered') {
 	        this.setState({error: "There's no account with that email address!"});
 	    } else if (result.status === 'wrong_password') {
@@ -52,6 +52,7 @@ export default class LetsLogInPage extends React.Component {
 	}
 
 	sendLoginRequest() {
+		this.setState({error: ""});
 		var formVal = this.refs.form.getValue();
 	    if(formVal && formVal.email && formVal.password) {
 	    	api.logIn(formVal.email, formVal.password, (results) => {
